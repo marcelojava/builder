@@ -1,7 +1,10 @@
 package builder;
 
 import modelo.Hamburguer;
+import modelo.Ingrediente;
 import modelo.Sanduiche;
+
+import java.math.BigDecimal;
 
 public class HamburguerBuilder extends SanduicheBuilder {
 
@@ -13,7 +16,10 @@ public class HamburguerBuilder extends SanduicheBuilder {
     }
 
     @Override
-    public void inserirIngredientes() {
+    public void inserirIngredientes(Ingrediente... ingredientes) {
+        for (Ingrediente ingrediente : ingredientes) {
+            hamburger.addIngrediente(ingrediente);
+        }
         System.out.println("Inserir ingredientes no hamburguer");
     }
 
@@ -23,8 +29,20 @@ public class HamburguerBuilder extends SanduicheBuilder {
     }
 
     @Override
+    public void calcularValorTotal() {
+        hamburger.getIngredientes().forEach(ingrediente -> {
+            BigDecimal valorIngrediente =
+                    mapaValoresIngredientes.get(ingrediente.getNome());
+
+            hamburger.setValorTotal(hamburger.getValorTotal()
+                    .add(valorIngrediente
+                            .multiply(BigDecimal.valueOf(ingrediente.getQuantidade()))));
+        });
+    }
+
+    @Override
     public Sanduiche getSanduiche() {
-        System.out.println("Hamburguer esta pronto");
+        System.out.println(hamburger);
         return hamburger;
     }
 }

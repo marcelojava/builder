@@ -1,11 +1,14 @@
 import builder.SanduicheBuilder;
+import modelo.Ingrediente;
+import modelo.Sanduiche;
 
 public class Cozinha {
 
-    public void fazerSaunduiche(SanduicheBuilder builder) {
+    public Sanduiche fazerSaunduiche(SanduicheBuilder builder, Ingrediente... ingredientes) {
         builder.abrePao();
-        builder.inserirIngredientes();
+        builder.inserirIngredientes(ingredientes);
         builder.fecharPao();
-        builder.getSanduiche();
+        builder.calcularValorTotal();
+        return builder.getSanduiche();
     }
 }
